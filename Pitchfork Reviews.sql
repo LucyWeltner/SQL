@@ -73,7 +73,8 @@ WHEN artist_count<3 THEN "new" ELSE "Various Artists"
 END AS "tier" FROM (SELECT artist,AVG(score) AS average_score, COUNT(artist) AS artist_count FROM reviews GROUP BY artist ORDER BY artist_count)
 GROUP BY tier;
 
-#See which artists are mentioned in other artist’s reviews (kind of broken):
+#See which artists are mentioned in other artist’s reviews:
 SELECT reviewscopy.artist, reviews.artist FROM reviews
 	JOIN reviews reviewscopy
-	ON reviews.review LIKE ('% '||reviewscopy.artist||' %')
+	ON reviews.review LIKE ('% '||reviewscopy.artist||' %') 
+	WHERE reviewscopy.artist NOT IN ("Can", "Love", "Home", "About", "Air", "Blur", "Singer", "Death", "So", "Sounds", "Guitars");
